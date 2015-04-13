@@ -19,6 +19,8 @@
 -(void) setFrameX:(CGFloat) x ;
 -(void) setFrameY:(CGFloat) y ;
 -(void) setLocationX:(CGFloat) x y:(CGFloat) y ;
+-(CGFloat) boundsWidth ;
+-(CGFloat) boundsHeight ;
 -(void) translateX:(CGFloat) x
                  y:(CGFloat) y ;
 -(void) moveToParentBottom ;

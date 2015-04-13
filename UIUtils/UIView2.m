@@ -75,6 +75,14 @@
     self.frame = frame ;
 }
 
+-(CGFloat) boundsWidth {
+    return self.bounds.size.width;
+}
+
+-(CGFloat) boundsHeight {
+    return self.bounds.size.height;
+}
+
 -(void) moveToParentBottom {
     if ( self.superview == nil )
         return ;
