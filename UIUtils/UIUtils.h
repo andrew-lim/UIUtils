@@ -18,7 +18,15 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+// ALog always displays output regardless of the DEBUG setting
+#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
 @interface UIUtils : NSObject
 
++(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
++(UIImage*) imageNamed:(NSString*) name scaledToWidth: (float) width;
+
++(void) alert:(NSString*) msg
+        title:(NSString*) title;
 
 @end
