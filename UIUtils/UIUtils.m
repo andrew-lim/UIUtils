@@ -30,6 +30,22 @@
     return newImage;
 }
 
++(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToHeight: (float) i_height
+{
+    float oldHeight = sourceImage.size.height;
+    float scaleFactor = i_height / oldHeight;
+
+    float newHeight = oldHeight * scaleFactor;
+    float newWidth = sourceImage.size.width * scaleFactor;
+
+    // See skornos comment in the stackoverflow page
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(newWidth, newHeight), NO, 0);
+
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 +(UIImage*) imageNamed:(NSString*) name scaledToWidth: (float) width {
     UIImage* img = [UIImage imageNamed:name];
@@ -37,6 +53,29 @@
         img = [UIUtils imageWithImage:img scaledToWidth:width];
     }
     return img;
+}
+
++(UIImage*) imageNamed:(NSString*) name scaledToHeight: (float) height {
+    UIImage* img = [UIImage imageNamed:name];
+    if ( img.size.height != height ) {
+        img = [UIUtils imageWithImage:img scaledToHeight:height];
+    }
+    return img;
+}
+
++ (UIImage *)imageWithColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return image;
 }
 
 +(void) alert:(NSString*) msg
@@ -50,5 +89,12 @@
     [alert show];
 }
 
++(void) scrollViewContentSizeToFit:(UIScrollView *)scrollView {
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    scrollView.contentSize = contentRect.size;
+}
 
 @end

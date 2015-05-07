@@ -24,9 +24,14 @@
 @interface UIUtils : NSObject
 
 +(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
++(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToHeight: (float) i_height;
 +(UIImage*) imageNamed:(NSString*) name scaledToWidth: (float) width;
++(UIImage*) imageNamed:(NSString*) name scaledToHeight: (float) height;
++ (UIImage*)imageWithColor:(UIColor *)color;
 
 +(void) alert:(NSString*) msg
         title:(NSString*) title;
+
++(void) scrollViewContentSizeToFit:(UIScrollView*) scrollView;
 
 @end

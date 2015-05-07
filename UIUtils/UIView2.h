@@ -24,6 +24,7 @@
 -(void) translateX:(CGFloat) x
                  y:(CGFloat) y ;
 -(void) moveToParentBottom ;
+-(void) moveToParentRight ;
 -(void) moveBelow:(UIView*) b
                by:(CGFloat) cy ;
 -(void) moveAbove:(UIView*) b

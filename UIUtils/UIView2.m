@@ -86,8 +86,15 @@
 -(void) moveToParentBottom {
     if ( self.superview == nil )
         return ;
-    CGFloat newY = self.superview.frame.size.height - self.bounds.size.height ;
+    CGFloat newY = self.superview.bounds.size.height - self.bounds.size.height ;
     self.frame =  CGRectMake( self.frame.origin.x, newY, self.frame.size.width, self.frame.size.height );
+}
+
+-(void) moveToParentRight {
+    if ( self.superview == nil )
+        return ;
+    CGFloat newX = self.superview.bounds.size.width - self.bounds.size.width ;
+    self.frame =  CGRectMake( newX, self.frame.origin.y, self.frame.size.width, self.frame.size.height );
 }
 
 -(void) moveBelow:(UIView*) b
