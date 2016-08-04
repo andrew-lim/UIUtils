@@ -97,4 +97,15 @@
     scrollView.contentSize = contentRect.size;
 }
 
++(void) scrollViewContentSizeToFit:(UIScrollView *)scrollView
+                     bottomPadding:(CGFloat) padding {
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    contentRect.size.height += padding;
+    scrollView.contentSize = contentRect.size;
+}
+
+
 @end

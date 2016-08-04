@@ -33,5 +33,7 @@
         title:(NSString*) title;
 
 +(void) scrollViewContentSizeToFit:(UIScrollView*) scrollView;
++(void) scrollViewContentSizeToFit:(UIScrollView *)scrollView
+                     bottomPadding:(CGFloat) padding;
 
 @end
