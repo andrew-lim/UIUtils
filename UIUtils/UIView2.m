@@ -115,6 +115,12 @@
     a.frame = CGRectMake( b.frame.origin.x+b.frame.size.width+cx, a.frame.origin.y, a.frame.size.width, a.frame.size.height );
 }
 
+-(void) moveLeftBefore:(UIView*) b
+                    by:(CGFloat) cx {
+    UIView* a = self ;
+    a.frame = CGRectMake( b.frame.origin.x-a.frame.size.width-cx, a.frame.origin.y, a.frame.size.width, a.frame.size.height );
+}
+
 -(void) alignTop:(UIView*) b {
     UIView* a = self ;
     a.frame = CGRectMake( a.frame.origin.x, b.frame.origin.y, a.frame.size.width, a.frame.size.height );
@@ -128,6 +134,15 @@
 -(void) alignRight:(UIView*) b {
     UIView* a = self ;
     a.frame = CGRectMake( b.frame.origin.x+b.frame.size.width-a.frame.size.width, a.frame.origin.y, a.frame.size.width, a.frame.size.height );
+}
+
+-(void) valignCenter:(UIView*) b {
+    UIView* a = self ;
+
+    CGFloat centerY = b.frame.origin.y + b.boundsHeight/2;
+    CGFloat aY = centerY - (a.boundsHeight/2);
+
+    a.frame = CGRectMake( a.frame.origin.x, aY, a.frame.size.width, a.frame.size.height );
 }
 
 -(void) centerVertically{
@@ -163,6 +178,22 @@
 
 -(CGFloat) right {
     return self.frame.origin.x + self.frame.size.width;
+}
+
+-(void) expand:(CGFloat) length {
+    UIView* v = self ;
+
+    v.frame = CGRectMake( v.frame.origin.x-length, v.frame.origin.y-length,
+                          v.frame.size.width+length*2, v.frame.size.height+length*2 );
+}
+
+-(CGRect) rectThatFitsSubviews {
+    // Resize to fit subviews
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    return contentRect;
 }
 
 +(CGRect) screenRect {

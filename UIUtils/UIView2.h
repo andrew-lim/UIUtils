@@ -1,8 +1,8 @@
 //
 //  UIView2.h
-//  Andrew Lim
+//  Andrew Lim.
 //
-//  Copyright (c) 2013-2015 Andrew Lim. All rights reserved.
+//  Copyright (c) 2013-2015 Andrew Lim.. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -31,15 +31,19 @@
                by:(CGFloat) cy ;
 -(void) moveRightAfter:(UIView*) a
                     by:(CGFloat) c;
+-(void) moveLeftBefore:(UIView*) a
+                    by:(CGFloat) c;
 -(void) alignLeft:(UIView*) b;
 -(void) alignTop:(UIView*) b;
 -(void) alignRight:(UIView*) b;
+-(void) valignCenter:(UIView*) b;
 -(void) centerHorizontally ;
 -(void) centerVertically ;
 -(NSString*) frameDesc;
 -(CGFloat) bottom;
 -(CGFloat) right;
-
+-(void) expand:(CGFloat) length;
+-(CGRect) rectThatFitsSubviews;
 +(CGRect) screenRect;
 
 @end
