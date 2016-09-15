@@ -2,11 +2,13 @@
 //  UIUtils.m
 //  BigHouse
 //
-//  Created by Andrew Lim on 3/17/15.
+//  Created by Andrew Lim. on 3/17/15.
 //  Copyright (c) 2015 InterApp Pluz Sdn. Bhd. All rights reserved.
 //
 
 #import "UIUtils.h"
+
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 @implementation UIUtils
 
@@ -63,6 +65,28 @@
     return img;
 }
 
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize deviceScale:(BOOL) deviceScale {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, deviceScale ? 0.0 : 1.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 + (UIImage *)imageWithColor:(UIColor *)color
 {
     CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
@@ -76,6 +100,30 @@
     UIGraphicsEndImageContext();
 
     return image;
+}
+
++ (UIImage *)imageWithImage:(UIImage*) image
+    alpha:(CGFloat) alpha
+{
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0f);
+
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGRect area = CGRectMake(0, 0, image.size.width, image.size.height);
+
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, 0, -area.size.height);
+
+    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+
+    CGContextSetAlpha(ctx, alpha);
+
+    CGContextDrawImage(ctx, area, image.CGImage);
+
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsEndImageContext();
+
+    return newImage;
 }
 
 +(void) alert:(NSString*) msg
@@ -107,5 +155,22 @@
     scrollView.contentSize = contentRect.size;
 }
 
++(void) stackViews:(NSMutableArray*) views
+        horizontal:(BOOL) horizontal
+           spacing:(CGFloat) spacing {
+    UIView* prevView = nil;
+    for ( int i=0; i<views.count; ++i ) {
+        UIView* view = [views objectAtIndex:i];
+        if ( prevView ) {
+            if ( horizontal ) {
+                [view moveRightAfter:prevView by:spacing];
+            }
+            else {
+                [view moveBelow:prevView by:spacing];
+            }
+        }
+        prevView = view;
+    }
+}
 
 @end

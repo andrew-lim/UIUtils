@@ -43,6 +43,10 @@
 -(CGFloat) bottom;
 -(CGFloat) right;
 -(void) expand:(CGFloat) length;
+-(void) expandbyLeft:(CGFloat) left
+                 top:(CGFloat) top
+               right:(CGFloat) right
+              bottom:(CGFloat) bottom;
 -(CGRect) rectThatFitsSubviews;
 +(CGRect) screenRect;
 

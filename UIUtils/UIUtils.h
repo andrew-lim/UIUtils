@@ -1,8 +1,8 @@
 //
 //  UIView2.h
-//  Andrew Lim
+//  Andrew Lim.
 //
-//  Copyright (c) 2013-2015 Andrew Lim. All rights reserved.
+//  Copyright (c) 2013-2015 Andrew Lim.. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,7 +27,11 @@
 +(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToHeight: (float) i_height;
 +(UIImage*) imageNamed:(NSString*) name scaledToWidth: (float) width;
 +(UIImage*) imageNamed:(NSString*) name scaledToHeight: (float) height;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize deviceScale:(BOOL) deviceScale;
 + (UIImage*)imageWithColor:(UIColor *)color;
++ (UIImage *)imageWithImage:(UIImage*) image
+                      alpha:(CGFloat) alpha;
 
 +(void) alert:(NSString*) msg
         title:(NSString*) title;
@@ -35,5 +39,8 @@
 +(void) scrollViewContentSizeToFit:(UIScrollView*) scrollView;
 +(void) scrollViewContentSizeToFit:(UIScrollView *)scrollView
                      bottomPadding:(CGFloat) padding;
++(void) stackViews:(NSMutableArray*) views
+        horizontal:(BOOL) horizontal
+           spacing:(CGFloat) spacing;
 
 @end

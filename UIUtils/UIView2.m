@@ -187,6 +187,17 @@
                           v.frame.size.width+length*2, v.frame.size.height+length*2 );
 }
 
+-(void) expandbyLeft:(CGFloat) left
+                 top:(CGFloat) top
+               right:(CGFloat) right
+              bottom:(CGFloat) bottom
+{
+    UIView* v = self ;
+
+    v.frame = CGRectMake( v.frame.origin.x-left, v.frame.origin.y-top,
+                         v.frame.size.width+left+right, v.frame.size.height+top+bottom );
+}
+
 -(CGRect) rectThatFitsSubviews {
     // Resize to fit subviews
     CGRect contentRect = CGRectZero;
