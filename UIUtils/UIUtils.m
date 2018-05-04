@@ -137,6 +137,25 @@
     [alert show];
 }
 
++(void) alertController:(UIViewController*) ctrl
+                    msg: (NSString*) msg
+                  title:(NSString*) title {
+    UIAlertController * alertCtrl =  [UIAlertController alertControllerWithTitle:title
+                                                                         message:msg
+                                                                  preferredStyle:UIAlertControllerStyleAlert
+                                      ];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"OK"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                   }];
+    [alertCtrl addAction:cancelAction];
+    [ctrl presentViewController:alertCtrl animated:YES completion:^{
+        ALog(@"");
+    }];
+}
+
 +(void) scrollViewContentSizeToFit:(UIScrollView *)scrollView {
     CGRect contentRect = CGRectZero;
     for (UIView *view in scrollView.subviews) {
@@ -170,6 +189,65 @@
             }
         }
         prevView = view;
+    }
+}
+
++ (NSString *)htmlFromBodyString:(NSString *)htmlBodyString
+                        textFont:(UIFont *)font
+                       textColor:(UIColor *)textColor
+{
+    int numComponents = (int)CGColorGetNumberOfComponents([textColor CGColor]);
+
+    NSAssert(numComponents == 4 || numComponents == 2, @"Unsupported color format");
+
+    // E.g. FF00A5
+    NSString *colorHexString = nil;
+
+    const CGFloat *components = CGColorGetComponents([textColor CGColor]);
+
+    if (numComponents == 4)
+    {
+        unsigned int red = components[0] * 255;
+        unsigned int green = components[1] * 255;
+        unsigned int blue = components[2] * 255;
+        colorHexString = [NSString stringWithFormat:@"%02X%02X%02X", red, green, blue];
+    }
+    else
+    {
+        unsigned int white = components[0] * 255;
+        colorHexString = [NSString stringWithFormat:@"%02X%02X%02X", white, white, white];
+    }
+
+    NSString *HTML = [NSString stringWithFormat:@"<html>\n"
+                      "<head>\n"
+                      "<style type=\"text/css\">\n"
+                      "body {font-family: \"%@\"; font-size: %@; color:#%@;}\n"
+                      "</style>\n"
+                      "</head>\n"
+                      "<body>%@</body>\n"
+                      "</html>",
+                      font.familyName, @(font.pointSize), colorHexString, htmlBodyString];
+
+    return HTML;
+}
+
++(void) fixUIWebViewDelay:(UIWebView*) webView {
+    // https://medium.com/@mihai/disabling-the-click-delay-in-uiwebview-5cd6b18a8c19
+    for (UIView* view in webView.scrollView.subviews) {
+        // UIWebBrowserView
+        if ([view.class.description hasPrefix:@"UIWebBrowse"] && [view.class.description hasSuffix:@"rView"]) {
+            for (UIGestureRecognizer *gestureRecognizer in view.gestureRecognizers) {
+                if ([gestureRecognizer isKindOfClass:UITapGestureRecognizer.class]) {
+                    ALog(@"Disabling UITapGestureRecognizer");
+                    UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *) gestureRecognizer;
+                    if (tapRecognizer.numberOfTapsRequired == 2 && tapRecognizer.numberOfTouchesRequired == 1) {
+                        tapRecognizer.enabled = NO;
+                        break;
+                    }
+                }
+            }
+            break;
+        }
     }
 }
 

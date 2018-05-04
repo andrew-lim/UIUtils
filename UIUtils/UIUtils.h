@@ -36,11 +36,23 @@
 +(void) alert:(NSString*) msg
         title:(NSString*) title;
 
+// https://stackoverflow.com/questions/30129278/keyboard-pops-up-after-uialertview-is-dismissed-on-ios-8-3-for-ipad
++(void) alertController:(UIViewController*) ctrl
+                    msg: (NSString*) msg
+                  title:(NSString*) title;
+
+
 +(void) scrollViewContentSizeToFit:(UIScrollView*) scrollView;
 +(void) scrollViewContentSizeToFit:(UIScrollView *)scrollView
                      bottomPadding:(CGFloat) padding;
 +(void) stackViews:(NSMutableArray*) views
         horizontal:(BOOL) horizontal
            spacing:(CGFloat) spacing;
+
++ (NSString *)htmlFromBodyString:(NSString *)htmlBodyString
+                        textFont:(UIFont *)font
+                       textColor:(UIColor *)textColor;
+
++(void) fixUIWebViewDelay:(UIWebView*) webView;
 
 @end
